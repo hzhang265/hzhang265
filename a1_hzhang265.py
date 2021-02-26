@@ -20,17 +20,12 @@ import sys
 
 def leap_year(obj):
     '''
-    This function will evenly divide the year by 4, 100, and 400 to test if it is a leap year.
-    If it is indeed a leap year, it returns 1, if it is not, returns 0.
+    This function will evenly divide the year by 4, 400, if any of the results were true, it further checks if the year can be divided by 100. If not divisible by 100,
+    it is a leap year.
     '''
-    status = False
     year = int(obj)
-    if (year % 4) == 0:
-        if (year % 100) == 0:
-            if (year % 400) == 0:
-                status = True           
+    return (year % 4 == 0 or year % 400 == 0) and (year % 100 != 0)
 
-    return status
 
 def sanitize(obj1,obj2):
     '''
@@ -71,7 +66,7 @@ def usage():
     '''
     Print error message when there is no 2 system argument.
     '''
-    status = 'Incorrect number of system arguments entered.'
+    status = 'Usage: a1_hzhang265.py YYYYMMDD|YYYY/MM/DD|YYYY-MM-DD|YYYY.MM.DD'
     return status
 
 if __name__ == "__main__":
@@ -88,11 +83,10 @@ if __name__ == "__main__":
    # step 3
    allow_chars = '0123456789'
    dob = sanitize(user_raw_data, allow_chars)
-   print('Sanitized user data:', dob)
    # setp 4
    result = size_check(dob,8)
    if result == False:
-       print("Error 09: wrong data entered")
+       print("Error 09: wrong date entered")
        sys.exit()
    # step 5
    year = int(dob[0:4])
@@ -105,7 +99,7 @@ if __name__ == "__main__":
        sys.exit()
    result = range_check(month,(1,12))
    if result == False:
-       print("Error 02: Wrong month entered")
+       print("Error 02: wrong month entered")
        sys.exit()
    result = leap_year(year)
    if result == True:
@@ -117,4 +111,4 @@ if __name__ == "__main__":
    # step 7
    new_dob = str(month_name[month - 1])+' '+ str(day)+', '+str(year)
    # step 8
-   print("Your date of birth is:", new_dob)  
+   print(new_dob)  
